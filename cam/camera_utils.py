@@ -1,27 +1,45 @@
+import configparser
 import cv2
 
-def capture_frame(camera_index=0):
+# Función para cargar la configuración de las cámaras
+def load_camera_config(config_file):
     """
-    Captura un fotograma desde la cámara especificada.
-
+    Carga la configuración de las cámaras desde un archivo .ini.
+    
     Args:
-        camera_index (int): Índice de la cámara a usar. Por defecto, 0.
-    
+        config_file (str): Ruta al archivo de configuración .ini.
+        
     Returns:
-        tuple: Retorna un estado booleano de éxito y el fotograma capturado.
+        dict: Diccionario con nombres de cámaras como claves y URLs como valores.
     """
-    # Inicializamos la captura de video
-    cap = cv2.VideoCapture(camera_index)
-    if not cap.isOpened():
-        print(f"Error: No se puede acceder a la cámara {camera_index}.")
-        return False, None
+    config = configparser.ConfigParser()
+    config.read(config_file)
 
-    # Leemos un fotograma
-    success, frame = cap.read()
-    cap.release()  # Liberamos la cámara inmediatamente después de capturar
+    cameras = {}
+    for section in config.sections():
+        if 'url' in config[section]:
+            cameras[section] = config[section]['url']
+    return cameras
+
+# Función para capturar un fotograma de una cámara específica
+def capture_frame(camera_url):
+    """
+    Captura un fotograma desde la cámara con la URL especificada.
     
-    if not success:
-        print("Error: No se pudo capturar el fotograma.")
-        return False, None
+    Args:
+        camera_url (str): URL de la cámara (RTSP, etc.).
+        
+    Returns:
+        frame: Fotograma capturado como matriz de imagen.
+    """
+    cap = cv2.VideoCapture(camera_url)
+    if not cap.isOpened():
+        raise Exception(f"No se pudo abrir la cámara en {camera_url}")
 
-    return True, frame
+    ret, frame = cap.read()
+    cap.release()
+
+    if not ret:
+        raise Exception(f"No se pudo capturar el fotograma de {camera_url}")
+    
+    return frame

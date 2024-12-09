@@ -1,6 +1,6 @@
 import numpy as np
 import threading as th
-from cam.config_cam import init_cam, show_video
+from cam.config_cam import show_video, init_cam
 from db.config_db import connect
 
 def main():

@@ -3,15 +3,15 @@ import configparser
 import time
 import os
 
-# Inicializa el lector de configuración con manejo de errores
-config = configparser.ConfigParser()
-config_file = 'cameras.ini'
+# Obtener la ruta absoluta al archivo de configuración
+config_file = os.path.join(os.path.dirname(__file__), 'cameras.ini')
 
 # Alerta de fallo al no encontrar archivo de configuración de cámaras
 if not os.path.exists(config_file):
-    raise FileNotFoundError(f"El archivo de configuración '{config_file}' no existe.")
+    raise FileNotFoundError(f"El archivo de configuración '{config_file}' no existe en la ruta '{config_file}'.")
 
-# Lee el archivo de configuración
+# Inicializa el lector de configuración
+config = configparser.ConfigParser()
 config.read(config_file)
 
 # Obtener las URLs de las cámaras y crear un diccionario con sus nombres
