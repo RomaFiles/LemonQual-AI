@@ -140,7 +140,9 @@ def show_video():
 
 
                         # Mostrar el frame procesado
-                        cv2.imshow(name, frame)
+                        nf = name, frame
+                        return nf
+                        # cv2.imshow(name, frame)
                     else:
                         print(f"No se pudo leer el cuadro de {name}. Reintentando...")
                         cam.release()
