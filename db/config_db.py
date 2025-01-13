@@ -3,6 +3,7 @@ from configparser import ConfigParser
 import time
 import sys
 
+# Si no se usa la ruta absoluta, por alguna razon no encuentra la seccion del database.ini (No tiene sentido el erro, es estupido)
 def config(filename="/home/cc-frutas/Documentos/LemonQual AI/db/database.ini", section="main"):
 
     # Crear un parser
