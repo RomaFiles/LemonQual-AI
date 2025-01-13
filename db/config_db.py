@@ -1,26 +1,22 @@
 import psycopg2
 from configparser import ConfigParser
-import os
 import time
 import sys
 
-def config(filename="database.ini", section ="main"):
+# Si no se usa la ruta absoluta, por alguna razon no encuentra la seccion del database.ini (No tiene sentido el erro, es estupido)
+def config(filename="/home/cc-frutas/Documentos/LemonQual AI/db/database.ini", section="main"):
+
     # Crear un parser
     parser = ConfigParser()
-    
-    # Leer archivo de configuración
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(f"El archivo '{filename}' no existe en la ruta '{filepath}'.")
-    parser.read(filepath)
-
-    # Obtener los parámetros de la sección especificada
+    # Leer archvivo de configuración
+    parser.read(filename)
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
         for param in params:
             db[param[0]] =param[1]
     else:
-        raise Exception(f"La sección '{section}' no se encuentra en el archivo '{filename}'.")
+        raise Exception('Section{0} is not found in the {1} file'.format(section, filename))
     return db
 
 def connect(max_attempts=5):
@@ -32,7 +28,6 @@ def connect(max_attempts=5):
             # Obtenemos los parámetros de conexión desde el archivo de configuración
             params = config()
             print('Conectando a base de datos.')
-            
             # Se intenta conectar a la base de datos
             connection = psycopg2.connect(**params)
 
