@@ -1,7 +1,14 @@
 import numpy as np
 import threading as th
-from cam.config_cam import init_cam, show_video
+import os
+import sys
+
+# Agrega la carpeta raíz al sys.path
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(root_dir)
+from cam.config_cam import show_video, init_cam
 from db.config_db import connect
+
 
 def main():
     print("Iniciando configuración de cámaras.")

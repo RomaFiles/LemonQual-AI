@@ -5,7 +5,7 @@ import os
 
 # Inicializa el lector de configuración con manejo de errores
 config = configparser.ConfigParser()
-config_file = 'cameras.ini'
+config_file = os.path.join(os.path.dirname(__file__), 'cameras.ini')
 
 # Alerta de fallo al no encontrar archivo de configuración de cámaras
 if not os.path.exists(config_file):

@@ -3,7 +3,8 @@ from configparser import ConfigParser
 import time
 import sys
 
-def config(filename="database.ini", section ="main"):
+def config(filename="/home/cc-frutas/Documentos/LemonQual AI/db/database.ini", section="main"):
+
     # Crear un parser
     parser = ConfigParser()
     # Leer archvivo de configuración
