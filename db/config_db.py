@@ -5,9 +5,6 @@ import time
 import sys
 
 def config(filename="database.ini", section ="main"):
-    # Obtener la ruta absoluta del archivo de configuración
-    filepath = os.path.join(os.path.dirname(__file__), filename)
-
     # Crear un parser
     parser = ConfigParser()
     
